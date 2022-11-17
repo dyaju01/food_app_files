@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app_files/authentication/auth_screen.dart';
 import 'package:food_app_files/global/global.dart';
 import 'package:food_app_files/mainScreens/home_screen.dart';
 import 'package:food_app_files/widgets/error_dialog.dart';
@@ -62,11 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
     });
     if (currentUser != null) {
-      readDataAndSetDataLocally(currentUser!).then((value) {
-        Navigator.pop(context);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => const HomeScreen()));
-      });
+      readDataAndSetDataLocally(currentUser!);
     }
   }
 
@@ -76,13 +73,31 @@ class _LoginScreenState extends State<LoginScreen> {
         .doc(currentUser.uid)
         .get()
         .then((snapshot) async {
-      await sharedPreferences!.setString("uid", currentUser.uid);
-      await sharedPreferences!
-          .setString("email", snapshot.data()!["sellerEmail"]);
-      await sharedPreferences!
-          .setString("name", snapshot.data()!["sellerName"]);
-      await sharedPreferences!
-          .setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
+      if (snapshot.exists) {
+        await sharedPreferences!.setString("uid", currentUser.uid);
+        await sharedPreferences!
+            .setString("email", snapshot.data()!["sellerEmail"]);
+        await sharedPreferences!
+            .setString("name", snapshot.data()!["sellerName"]);
+        await sharedPreferences!
+            .setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
+
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const HomeScreen()));
+      } else {
+        firebaseAuth.signOut();
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const AuthScreen()));
+        showDialog(
+            context: context,
+            builder: (c) {
+              return ErrorDialog(
+                message: "No record found",
+              );
+            });
+      }
     });
   }
 
