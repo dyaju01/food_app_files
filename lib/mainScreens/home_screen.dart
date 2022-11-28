@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app_files/authentication/auth_screen.dart';
+import 'package:food_app_files/widgets/my_drawer.dart';
 
 import '../global/global.dart';
 
@@ -14,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -32,22 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
           sharedPreferences!.getString("name")!,
         ),
         centerTitle: true,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text("Logout"),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.cyan,
-          ),
-          onPressed: () {
-            firebaseAuth.signOut().then((value) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const AuthScreen()));
-            });
-          },
-        ),
-      ),
+      body: Center(),
     );
   }
 }
