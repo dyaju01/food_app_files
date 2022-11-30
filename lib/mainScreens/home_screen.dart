@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_files/uploadScreens/menus_upload_screen.dart';
 import 'package:food_app_files/widgets/my_drawer.dart';
 
 import '../global/global.dart';
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [
-              Colors.yellowAccent,
+              Colors.lightBlueAccent,
               Colors.orange,
             ],
             begin: FractionalOffset(0.0, 0.0),
@@ -31,11 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: Text(
           sharedPreferences!.getString("name")!,
+          style: const TextStyle(fontSize: 30, fontFamily: "Lobster"),
         ),
         centerTitle: true,
         automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.post_add,
+              color: Colors.cyan,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => const MenusUploadScreen()));
+            },
+          ),
+        ],
       ),
-      body: Center(),
+      body: const Center(),
     );
   }
 }

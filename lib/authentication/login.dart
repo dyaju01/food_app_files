@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.blueAccent,
+              primary: Colors.lightGreen[400],
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             ),
             onPressed: () {

@@ -276,7 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         getCurrentLocation();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
+                        primary: Colors.lightGreen[400],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -291,7 +291,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blueAccent,
+                primary: Colors.blueAccent[200],
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               ),
               onPressed: () {
