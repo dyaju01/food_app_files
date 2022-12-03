@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_files/mainScreens/home_screen.dart';
 
 import '../authentication/auth_screen.dart';
 import '../global/global.dart';
@@ -64,7 +65,10 @@ class MyDrawer extends StatelessWidget {
                     "Home",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => const HomeScreen()));
+                  },
                 ),
                 const Divider(
                   height: 10,

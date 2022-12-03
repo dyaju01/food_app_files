@@ -2,25 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:food_app_files/global/global.dart';
+import 'package:food_app_files/model/items.dart';
 import 'package:food_app_files/model/menus.dart';
-import 'package:food_app_files/uploadScreens/menus_upload_screen.dart';
-import 'package:food_app_files/widgets/info_design.dart';
+import 'package:food_app_files/uploadScreens/items_upload_screen.dart';
+import 'package:food_app_files/widgets/items_design.dart';
 import 'package:food_app_files/widgets/my_drawer.dart';
 import 'package:food_app_files/widgets/progress_bar.dart';
 import 'package:food_app_files/widgets/text_widget_header.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ItemsScreen extends StatefulWidget {
+  final Menus? model;
+  ItemsScreen({this.model});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ItemsScreenState createState() => _ItemsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ItemsScreenState extends State<ItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -44,25 +45,33 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.post_add,
+              Icons.library_add,
               color: Colors.cyan,
             ),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const MenusUploadScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => ItemsUploadScreen(model: widget.model)));
             },
           ),
         ],
       ),
+      drawer: MyDrawer(),
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
-              pinned: true, delegate: TextWidgetHeader(title: "My Menus")),
+              pinned: true,
+              delegate: TextWidgetHeader(
+                  title:
+                      "My " + widget.model!.menuTitle.toString() + "'s Items")),
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("sellers")
                 .doc(sharedPreferences!.getString("uid"))
                 .collection("menus")
+                .doc(widget.model!.menuID)
+                .collection("items")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData
@@ -75,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 1,
                       staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                       itemBuilder: (context, index) {
-                        Menus model = Menus.fromJson(
+                        Items model = Items.fromJson(
                           snapshot.data!.docs[index].data()!
                               as Map<String, dynamic>,
                         );
-                        return InfoDesignWidget(
+                        return ItemsDesignWidget(
                           model: model,
                           context: context,
                         );

@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:food_app_files/authentication/auth_screen.dart';
 import 'package:food_app_files/global/global.dart';
 import 'package:food_app_files/mainScreens/home_screen.dart';
+import 'package:food_app_files/widgets/custom_Text_Field.dart';
 import 'package:food_app_files/widgets/error_dialog.dart';
 import 'package:food_app_files/widgets/loading_dialog.dart';
-
-import '../widgets/custom_Text_Field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -30,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (c) {
             return ErrorDialog(
-              message: "Please write email/password",
+              message: "Please write email/password.",
             );
           });
     }
@@ -44,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             message: "Checking Credentials",
           );
         });
+
     User? currentUser;
     await firebaseAuth
         .signInWithEmailAndPassword(
@@ -90,11 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (c) => const AuthScreen()));
+
         showDialog(
             context: context,
             builder: (c) {
               return ErrorDialog(
-                message: "No record found",
+                message: "No record found.",
               );
             });
       }
@@ -137,13 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.lightGreen[400],
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-            ),
-            onPressed: () {
-              formValidation();
-            },
             child: const Text(
               "Login",
               style: TextStyle(
@@ -151,6 +145,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.cyan,
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+            ),
+            onPressed: () {
+              formValidation();
+            },
           ),
           const SizedBox(
             height: 30,
