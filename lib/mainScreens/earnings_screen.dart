@@ -42,7 +42,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "₹$sellerTotalEarnings",
+                "₹" + sellerTotalEarnings!.toString(),
                 style: const TextStyle(
                     fontSize: 80, color: Colors.white, fontFamily: "Signatra"),
               ),
