@@ -150,8 +150,8 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
 
     imageXFile = await _picker.pickImage(
       source: ImageSource.camera,
-      maxHeight: 720,
-      maxWidth: 1280,
+      maxHeight: 1080,
+      maxWidth: 1920,
     );
 
     setState(() {

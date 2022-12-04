@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_files/mainScreens/item_detail_screen.dart';
 import 'package:food_app_files/model/items.dart';
 
 class ItemsDesignWidget extends StatefulWidget {
@@ -16,7 +17,10 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //Navigator.push(context, MaterialPageRoute(builder: (c)=> ItemsScreen(model: widget.model)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => ItemDetailsScreen(model: widget.model)));
       },
       splashColor: Colors.amber,
       child: Padding(
